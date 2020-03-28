@@ -1,0 +1,103 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\allowdisplaybreaks
+\newcommand{\dee}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\answer}{\textbf{\color{blue}Answer:}}
+%\usepackage{pythonhighlight}
+\usepackage{bm}
+\usepackage{amssymb}
+
+\title{Homework 1\\
+600.482/682 Deep Learning\\
+Spring 2020}
+
+\author{\bf{}}
+
+\begin{document}
+\maketitle
+
+\centering{
+\textbf{Due Sunday 2/23 11:59pm.\\
+Please type your answers inline of the LaTeX file \\
+Submit PDF to Gradescope with entry code 9G83Y7}}\\
+
+\vspace{5mm}
+
+\begin{enumerate}
+% Problem 1
+\item	In this exercise you are going to derive the well-known sigmoid expression for a Bernoulli distributed (binary) problem. The probability of the ''positive'' event occurring is $p$. The probability of the ''negative'' event occurring is $q=1-p$.
+
+\begin{enumerate}
+	\item What are the odds $o$ of the ''positive'' event occurring? Please express the result using p only.
+	
+	In statistics, the logit of the probability is the logarithm of the corresponding odds, i.e. $\textrm{logit}(p)=\textrm{log}(o)$.
+	
+	\item Given $\textrm{logit}(p)=x$, please derive the inverse function $\textrm{logit}^{-1}(x)$. Please express the result using $x$ only.
+	
+The inverse function of the logit in (b) is actually the sigmoid function $S(x)$. You may already have noticed that the probability $p = \textrm{logit}^{-1}(x) = S(x)$. This means that the range of the sigmoid function is the same as the range of a probability, i.e. $(0, 1)$. The domain of the sigmoid function is $(-\infty, \infty)$. Therefore, the sigmoid function maps all real numbers to the interval $(0, 1)$. 
+	
+	\item Now we look into the saturation of the sigmoid function. Calculate the value of the sigmoid function $S(x)$ for $x=\pm100, \pm10,$ and $0$. Round the results to two decimal places.
+	\item Calculate the derivatives of the sigmoid function $S'(x)$ and the value of $S'(x)$ for $x=\pm100, \pm10,$ and $0$. Round the results to two decimal places. 
+	
+You may have noticed that $S(\pm100)$ is very close to $S(\pm10)$; the derivatives at $x=\pm100$ and $x=\pm10$ are very close to zero. This is the saturation of the sigmoid function when $|x|$ is large. The saturation brings great difficulty in training deep neural networks. This will reappear in later lectures.
+
+\end{enumerate}
+
+
+% Problem 2
+\item Recall in class, we learned the form of a linear classifier as $f(\bm{x}; \bm{W}) =  \bm{W}\bm{x}+\bm{b}$. We will soon learn, that iteratively updating the weights in negative gradient direction will allow us to slowly move towards an optimal solution. We will call this technique backpropagation. Obviously, computing gradients is an important component of this technique. We will investigate the first derivative of a commonly used loss function: the softmax loss. Here, we consider a multinomial (multiple classes) problem. \\
+Let's first define the notations:
+\begin{align*}
+	\text{input features}: & \quad \bm{x} \in \mathbb{R}^D.\\
+	\text{target labels (one-hot encoded)}: & \quad \bm{y} \in \{0,1\}^K.\\
+	\text{multinomial linear classifier}: & \quad \bm{f} = \bm{W}\bm{x} + \bm{b}, \quad \bm{W} \in \mathbb{R}^{K \times D}\ \text{and}\ \bm{f}, \bm{b} \in \mathbb{R}^K\\
+	\text{e.g., for the k-th classification}: & \quad f_k = \bm{w}_k^T \bm{x} + b_k, \text{ corresponding to } y_k,\\
+								&\quad \text{where } \bm{w}^T_k \text{ is the k-th row of } \bm{W}, k \in \{1...K\}  
+\end{align*}
+\begin{enumerate}
+	\item Please express the softmax loss of logistic regression, $L(\bm{x}, \bm{W}, \bm{b}, \bm{y})$ using the above notations.
+	\item Please calculate its gradient derivative $\frac{\partial L}{\partial \bm{w}_k}$.
+\end{enumerate}
+
+% Problem 3
+\item In class, we briefly touch upon the Kullback-Leibler (KL) divergence as another loss function to quantify agreement between two distributions $p$ and $q$. In machine learning scenarios, one of these two distributions will be determine by our training data, while the other is being generated as output of our model. The goal of training our model is to match these two distributions as well as possible. KL divergence is asymmetric, so that assigning these distributions to $p$ and $q$ will matter. Here, you will investigate this difference by calculating the gradient. The KL divergence is defined as 
+\begin{equation}
+	\text{KL}(p||q) = \sum_d p(d) \log \left( \frac{p(d)}{q(d)} \right) \nonumber
+\end{equation}
+
+\begin{enumerate}
+	\item Show that KL divergence is asymmetric using the following example. We define a discrete random variable $X$. Now consider the case that we have two sampling distributions $P(x)$ and $Q(x)$, which we present as two vectors that express the frequency of event $x$:
+	\begin{align*}
+		P(x) & = [1,\ 6,\ 12,\ 5,\ 2,\ 8,\ 12,\ 4]\\
+		Q(x) & = [1,\ 3,\ 6,\ 8,\ 15,\ 10,\ 5,\ 2]
+	\end{align*}
+	Please compute 1) the probability distribution, $p(x)$ and $q(x)$ (hint: calculate the normalization); and 2) both directions of KL divergence, \textbf{KL}$(p||q)$ and \textbf{KL}$(q||p)$.
+	\item Next, we try to optimize the weights $\bm{W}$ of a model in an attempt to minimize KL divergence. As a consequence, $q=q_{\bm{W}}$ now depends on the weights. Please express \textbf{KL}$(q_{\bm{W}}||p)$ and  \textbf{KL}$(p||q_{\bm{W}})$ as optimization objective functions. Can you tell which direction is easier for computation? To find out, please look back at the original expression of \textbf{KL}$(q_{\bm{W}}||p)$ and \textbf{KL}$(p||q_{\bm{W}})$ and see which terms can be grouped to be a constant. This constant can be thus cancelled out when calculating the gradient. Then, please also calculate the gradient of \textbf{KL}$(q_{\bm{W}}||p)$ and  \textbf{KL}$(p||q_{\bm{W}})$ w.r.t. $q_{\bm{W}}(d)$, the $d$-th element of $q_{\bm{W}}$.
+
+\end{enumerate}
+
+% Problem 4
+\item In this problem, you are provided an opportunity to perform hands-on calculation of the SVM loss and softmax loss we learned in class.\\
+We define a linear classifier: $$f(\bm{x}, \bm{W}) = \bm{W}\bm{x}+\bm{b}$$ and are given a data sample: $$\bm{x}_i = \begin{bmatrix}-15\\ 22\\ -44\\ 56 \end{bmatrix},\ y_i=\begin{bmatrix}
+0 \\ 0 \\ 1
+\end{bmatrix}.$$ 
+Assume that the weights of our model are given by $$\bm{W}=\begin{bmatrix}0.01,\ -0.05,\ 0.1,\ 0.05\\ 0.7,\ 0.2,\ 0.05,\ 0.16\\0.0,\ -0.45,\ -0.2,\ 0.03\end{bmatrix}, \bm{b}=\begin{bmatrix}0.0\\ 0.2\\ -0.3\end{bmatrix}.$$\\
+Please calculate 1) SVM loss (hinge loss) and 2) softmax loss (cross-entropy loss) of this sample. Use the natural log.
+
+\end{enumerate}
+
+\end{document}

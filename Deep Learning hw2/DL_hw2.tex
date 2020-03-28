@@ -1,0 +1,65 @@
+\documentclass[a4paper]{article}
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Homework 2\\
+600.482/682 Deep Learning\\
+Spring 2020}
+
+\begin{document}
+\maketitle
+
+\centering{
+\textbf{Due Sun Feb. 23 11:59pm.\\
+Please submit a report (LaTeX generated PDF) and \\
+the notebook as python file (file $\rightarrow$ download .py) \\
+to Gradescope with entry code 9G83Y7 \\
+(submit the code as programming assignment)
+}}\\
+
+\vspace{5mm}
+
+\begin{enumerate}
+% Problem 1
+\item The goal of this problem is to minimize a function given a certain input using gradient descent by breaking down the overall function into smaller components via a computation graph. The function is defined as:
+\begin{align*}
+f(x_1, x_2, w_1, w_2) = \frac{1}{1+e^{-(w_1 x_1+w_2 x_2)}} + 0.5(w_1^2 + w_2^2)\,.
+\end{align*}
+\begin{enumerate}
+\item Please calculate $\frac{\partial f}{\partial w_1}, \frac{\partial f}{\partial w_2}, \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}$.
+\item Start with the following initialization: $w_1 = 0.3, w_2 = -0.5, x_1 = 0.2, x_2 = 0.4$, draw the computation graph. Please use backpropagation as we did in class.\\
+You can draw the graph on paper and insert a photo into your report.\\
+The goal is for you to practice working with computation graphs. As a consequence, you must include the intermediate values during the forward and backward pass.
+\item Implement the above computation graph in the complimentary Colab Notebook using numpy. Use the values of (b) to initialize the weights and fix the input. Use a constant step size of 0.01. Plot the weight value $w_1$ and $w_2$ for 30 iterations in a single figure in the report.
+\end{enumerate}
+
+
+\item The goal of this problem is to understand the classification ability of a neural network. Specifically, we consider the XOR problem. Go to the link in footnote\footnote{\url{https://playground.tensorflow.org/#activation=relu&batchSize=10&dataset=xor&regDataset=reg-plane&learningRate=0.01&regularizationRate=0&noise=0&networkShape=&seed=0.10699&showTestData=false&discretize=true&percTrainData=80&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false}} and answer the following questions. \textit{Hint: hit reset the network right next to the run button after you change the architecture.}
+
+\begin{enumerate}
+\item Can a linear classifier, without any hidden layers, solve the XOR problem?
+\item With one hidden layer and $\textrm{ReLU}(x) = \max(0, x)$, how many neurons in the hidden layer do you need to solve the XOR problem? Describe the training loss and estimated prediction accuracy when using 2, 3 and 4 neurons. Discuss the intuition of why a certain number of neurons is necessary to solve XOR.
+\end{enumerate}{}
+
+% Problem 3
+\item
+In this problem, we want to build a neural network from scratch using Numpy for a real-world problem. We consider the MNIST dataset (\url{http://yann.lecun.com/exdb/mnist/}), a hand-written digit classification dataset. Please follow the formula in the complimentary Colab Notebook. \textit{Hint: Make sure you pass the loss and gradient check in the notebook.}
+\begin{enumerate}
+\item Implement the loss and gradient of a linear classifier (python function \\
+\texttt{linear\_classifier\_forward\_and\_backward}).
+\item Implement the loss and gradient of a multilayer perceptron with one hidden layer and $\textrm{ReLU}(x) = \max(0, x)$ (python function \texttt{mlp\_single\_hidden\_forward\_and\_backward}).
+\item Implement the loss and gradient of a multilayer perceptron with two hidden layer, skip connection and $\textrm{ReLU}(x) = \max(0, x)$ (python function \texttt{mlp\_two\_hidden\_forward\_and\_backward}).
+\item Plot the development accuracy of each epoch of three models in a single figure using the following hyperparameters: the batch size is 50, the learning rate is 0.005 and the number of epochs is 20.
+\item Try using other hyperparameters and select a set of best hyperparameters using \textbf{development accuracy}. Once you pick the best model and hyperparameters, include the development accuracy of each epoch into the above figure (make a new figure) and report the \textbf{test accuracy} of the selected model and hyperparameters.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
