@@ -1,0 +1,15 @@
+Final project给分：
+50% implementation and result(理解)（代码质量不重要）（对implementation的解释），其中innovation占10%（和送分没区别）
+不一定要做到state of the art，并不期望做出太多的结果
+The result doesn't really matter，更多是reasoning。解释清楚为什么要用什么东西
+30% quality of writeup，2页纸，会议的形式
+20% presnetation 3-5分钟解释想法，很短
+其他：
+用pytorch可以得到帮助，用别的也可以
+要有现成的dataset,因为时间很短
+主要是能在presentation中展示数效果，3-5分钟，很短，基本就是给观众展示一下效果
+presentation5月7日两点到五点
+可以看看kaggle和各大competition找找灵感和数据集
+proposal只需要presentation，3-5分钟，5页，之后可以改（比如architecture有严重问题），改主题要和TA讨论一下）
+final proposal 之后还有 final report, 一个team交一个
+接下来的作业不太有coding
